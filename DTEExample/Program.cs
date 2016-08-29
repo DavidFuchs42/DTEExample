@@ -1267,6 +1267,7 @@ namespace DTEExample
             {
                 textSel.GotoLine(i, true);
                 Console.WriteLine(textSel.Text);
+
             }
         }
         public static void DisplayEntireDocument(this EnvDTE.ProjectItem currentItem)
