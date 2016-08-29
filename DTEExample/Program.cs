@@ -48,8 +48,8 @@ namespace DTEExample
             string ProjectName = "ProjectName";
 
             string ThisdllDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            // replace the below line with a modification of the above
-            string parentDir = Directory.GetParent(ThisdllDirectory).Parent.FullName;
+            // replace the CurrentDirectory line with a modification of the above to get the dir no matter where the app referencing this is
+            // ....... string CurrentDirectory = Directory.GetParent(ThisdllDirectory).Parent...Parent...FullName; ?????? how many parents ??????
 
             string CurrentDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
@@ -79,7 +79,8 @@ namespace DTEExample
             //-------------------------------------------------------------------------------------------------
 
             // display the directories for grins and giggles
-            
+
+            Console.WriteLine("CurrentDirectory > " + CurrentDirectory);            
             Console.WriteLine("TemplatesDirectory > " + TemplatesDirectory);
             Console.WriteLine("ProjectTemplate > " + ProjectTemplate);
             Console.WriteLine("ItemTemplate > " + ItemTemplate);
@@ -89,14 +90,13 @@ namespace DTEExample
             // subdirectories added
             Console.WriteLine("FirstLevelSubDirectory > " + FirstLevelSubDirectory);
             Console.WriteLine("SecondLevelSubDirectory > " + SecondLevelSubDirectory);
-            Console.WriteLine("\n\nThisdllDirectory parentDir> {0}", parentDir);
-            Console.WriteLine("CurrentDirectory > " + CurrentDirectory);
+
             //--------------------------------------------------------------------
             //--------------------------------------------------------------------
             //--------------------------------------------------------------------
 
 
-            FileSystemMethods.DeleteFilesAndDirectories(SolutionDirectory); // remove the old version so this does not exception out
+            FileSystemMethods.DeleteFilesAndDirectories(SolutionDirectory); // remove the code generated in previous runs so this does not exception out
 
             //-------------------------------------------------------------------------------------------------
             //-------------------------------------------------------------------------------------------------
@@ -116,6 +116,9 @@ namespace DTEExample
 
             // Solution - create the solution
             DTEBase.dte.Solution.Create(SolutionDirectory, SolutionName);
+
+            // TODO - routine to get the solution - public static EnvDTE.Solution GetSolution(this DTEBase dtebase) { return DTEBase.dte.Solution; }
+            // TODO - EnvDTE.Solution currentSolution = DTEBase.GetSolution();
 
             //-------------------------------------------------------------------------------------------------
 
